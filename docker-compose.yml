@@ -1,0 +1,53 @@
+version: '3.8'
+services:
+  # load-balancer:
+  #   image: nginx
+  #   ports:
+  #     - "8080:80"
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/nginx.conf
+  #   depends_on:
+  #     - node-server-1
+  #     - node-server-2
+  sql-server:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    environment:
+      - SA_PASSWORD=password2332
+      - ACCEPT_EULA=Y
+    ports:
+      - "5434:1433"
+    networks:
+      - backend
+
+  node-server-1:
+    image: appdynamicload # Cambia 'tu-imagen-de-nodejs' por el nombre de tu imagen creada
+    container_name: node-server-1
+    ports:
+      - "3001:3000"
+    command: npm start
+    environment:
+      - DB_USER=josephsan
+      - DB_PASSWORD=password2332
+      - DB_SERVER=sql-server
+      - DB_DATABASE=dbparalela
+    depends_on:
+      - sql-server
+
+
+  node-server-2:
+    image: appdynamicload # Cambia 'tu-imagen-de-nodejs' por el nombre de tu imagen creada
+    container_name: node-server-2
+    ports:
+      - "3002:3000"
+    command: npm start
+    environment:
+      - DB_USER=josephsan
+      - DB_PASSWORD=password2332
+      - DB_SERVER=sql-server
+      - DB_DATABASE=dbparalela
+    depends_on:
+      - sql-server
+
+networks:
+    backend:
+      driver: bridge

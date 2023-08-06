@@ -1,0 +1,303 @@
+<div class="container-main">
+    <div class="main">
+        <div class="left backdrop-blur-[.5em] shadow-black/50 shadow-2xl transition bg-[rgba(16,18,27,0.4)]">
+            <div class="tab-content">
+                <ul>
+                    <li class="menu-heading f-space text-[18px]">Dashboard</li>
+                    <li><a data-toggle="tab" href="#overview"><i class="fa fa-home fa-lg"></i> Resumen</a></li>
+                    <li><a data-toggle="tab" href="#gestionabmc"><i class="fa fa-solid fa-city fa-lg"></i>
+                            Ciudades</a>
+                    </li>
+                    <li><a data-toggle="tab" href="#analytics"><i class="fa fa-solid fa-mountain-city fa-lg"></i> Sitios
+                            Turísiticos</a>
+                    </li>
+                    <li><a data-toggle="tab" href="#landing"><i class="fa fa-solid fa-users-gear fa-lg"></i>
+                            Clientes</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="right backdrop-blur-[.5em] shadow-black/50 shadow-2xl transition bg-[rgba(16,18,27,0.4)]">
+            <div class="tab-content">
+                <!-- Resumen -->
+                <div id="overview" class="tab-pane fade in active">
+                    <div class="header f-alexa !border-none !bg-transparent">
+                        <h4 class="!text-[#f5f5f5] text-[18px]">Descripción general</h4>
+                    </div>
+                    <div class="content flex flex-col w-full">
+                        <div class="row px-8">
+                            <div class="w-full flex flex-col justify-center items-start">
+                                <h2 class="f-space text-[18px] mb-8">Lista de ciudades</h2>
+                                <table class="bg-[#121212] text-white rounded-[10px] mb-12">
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>Cód. de ciudad</th>
+                                            <th>Nombre</th>
+                                            <th>Activo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each ciudad}}
+                                        <tr>
+                                            <td>{{@index}}</td>
+                                            <td>{{this.cod_ciud}}</td>
+                                            <td>{{this.nombre_ciud}}</td>
+                                            {{#if this.estado_ciud}}
+                                            <td>Sí</td>
+                                            {{else}}
+                                            <td>No</td>
+                                            {{/if}}
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="w-full flex flex-col justify-center items-start">
+                                <h2 class="f-space text-[18px] mb-8">Lista de sitios turísticos</h2>
+                                <table class="bg-[#121212] text-white rounded-[10px] mb-12">
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>Cód. de sitio</th>
+                                            <th>Nombre</th>
+                                            <th>Dirección</th>
+                                            <th>Teléfono</th>
+                                            <th>Cód. de ciudad</th>
+                                            <th>Activo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each sitios}}
+                                        <tr>
+                                            <td>{{@index}}</td>
+                                            <td>{{this.cod_turis}}</td>
+                                            <td>{{this.nombre_turis}}</td>
+                                            <td>{{this.direccion_turis}}</td>
+                                            <td>{{this.telefono_turis}}</td>
+                                            <td>{{this.cod_ciud}}</td>
+                                            {{#if this.estado_turis}}
+                                            <td>Sí</td>
+                                            {{else}}
+                                            <td>No</td>
+                                            {{/if}}
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="w-full flex flex-col justify-center items-start">
+                                <h2 class="f-space text-[18px] mb-8">Lista de clientes</h2>
+                                <table class="bg-[#121212] text-white rounded-[10px] mb-12">
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>Cód. de cliente</th>
+                                            <th>Nombre</th>
+                                            <th>Teléfono</th>
+                                            <th>Correo</th>
+                                            <th>Cód. de sitio turístico</th>
+                                            <th>Activo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each clientes}}
+                                        <tr>
+                                            <td>{{@index}}</td>
+                                            <td>{{this.cod_cli}}</td>
+                                            <td>{{this.nombre_cli}}</td>
+                                            <td>{{this.telefono_cli}}</td>
+                                            <td>{{this.correo_cli}}</td>
+                                            <td>{{this.cod_turis}}</td>
+                                            {{#if this.estado_cli}}
+                                            <td>Sí</td>
+                                            {{else}}
+                                            <td>No</td>
+                                            {{/if}}
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Ciudades -->
+                <div id="gestionabmc" class="tab-pane fade">
+                    <div class="header f-alexa !border-none !bg-transparent">
+                        <h4 class="!text-[#f5f5f5] text-[18px]">Ciudades</h4>
+                    </div>
+                    <div class="content flex flex-col">
+                        <div class="flex">
+                            <form action="/city" method="POST" class="w-full">
+                                <h2 class="f-space text-[18px] !mb-8">Agregar una nueva ciudad</h2>
+                                <div class="txt_field">
+                                    <input type="text" name="nombreCiudad" required>
+                                    <span></span>
+                                    <label class="f-alexa font-light" for="name">Nombre</label>
+                                </div>
+                                <div class="flex justify-start items-center">
+                                    <label class="f-alexa font-light text-[16px] mr-4 !mb-0"
+                                        for="lastname">Estado</label>
+                                    <input type="checkbox" name="stateCity" class="w-[20px] h-[20px] !m-0">
+                                </div>
+                                <button class="button" name="" id="">Agregar</button>
+                            </form>
+
+                            <form action="/city/update" method="post" class="w-full px-8" id="editForm"
+                                style="display: none;">
+                                <h2 class="f-space text-[18px] !mb-8">Editar ciudad</h2>
+                                <div class="txt_field">
+                                    <span class="f-alexa font-light text-[16px] text-[#adadad] ml-[5px]" for="id">Id
+                                        ciudad</span>
+                                    <span></span>
+                                    <input type="text" name="idCiudad" id="ciudadId" readonly>
+                                </div>
+                                <div class="txt_field">
+                                    <input type="text" name="nombreCiudad" required id="nameCiudad">
+                                    <span></span>
+                                    <label class="f-alexa font-light" for="name">Nombre</label>
+                                </div>
+                                <div class="flex justify-start items-center">
+                                    <label class="f-alexa font-light text-[16px] mr-4 !mb-0"
+                                        for="lastname">Estado</label>
+                                    <input type="checkbox" name="estadoCiudad" class="w-[20px] h-[20px] !m-0"
+                                        id="estadoCiudad">
+                                </div>
+                                <button class="button" name="" id="">Agregar</button>
+                            </form>
+                        </div>
+                        <div class="w-full flex flex-col justify-center items-start mt-16">
+                            <h2 class="f-space text-[18px] mb-8">Lista de ciudades</h2>
+                            <table class="w-full bg-[#121212] text-white rounded-[10px] table-alu mb-12">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>ID</th>
+                                        <th>Nombre</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each ciudad}}
+                                    <tr>
+                                        <td>{{@index}}</td>
+                                        <td>{{this.cod_ciud}}</td>
+                                        <td>{{this.nombre_ciud}}</td>
+                                        {{#if this.estado_ciud}}
+                                        <td>Sí</td>
+                                        {{else}}
+                                        <td>No</td>
+                                        {{/if}}
+                                        <td><a href="/city/{{this.cod_ciud}}"><i class="fa-solid fa-trash-can"></i></a>
+                                            <a href="#" class="ml-6"
+                                                onclick="editCiudad('{{this.cod_ciud}}', '{{this.nombre_ciud}}', '{{this.estado_ciud}}')"><i
+                                                    class="fa-regular fa-pen-to-square"></i></a>
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Sitios Turísticos -->
+                <div id="analytics" class="tab-pane fade">
+                    <div class="header f-alexa !border-none !bg-transparent">
+                        <h4 class="!text-[#f5f5f5] text-[18px]">Sitios Turísticos</h4>
+                    </div>
+                    <div class="content flex flex-col w-full">
+                        <div class="flex">
+                            <form action="/turismsites" method="POST" class="w-full">
+                                <h2 class="f-space text-[18px] !mb-8">Agregar un nuevo sitio turísitico</h2>
+
+                                <div class="txt_field">
+                                    <input type="text" name="nameSite" required>
+                                    <span></span>
+                                    <label class="f-alexa font-light" for="name">Nombre</label>
+                                </div>
+                                <div class="txt_field">
+                                    <input type="text" name="locationSite" required>
+                                    <span></span>
+                                    <label class="f-alexa font-light" for="lastname">Dirección</label>
+                                </div>
+                                <div class="txt_field">
+                                    <input type="text" name="telSite" required>
+                                    <span></span>
+                                    <label class="f-alexa font-light" for="lastname">Teléfono</label>
+                                </div>
+                                <div class="txt_field">
+                                    <input type="text" name="codCiud" required>
+                                    <span></span>
+                                    <label class="f-alexa font-light" for="lastname">Cód. de ciudad</label>
+                                </div>
+                                <div class="flex justify-start items-center">
+                                    <label class="f-alexa font-light text-[16px] mr-4 !mb-0"
+                                        for="lastname">Estado</label>
+                                    <input type="checkbox" name="boolSite" class="w-[20px] h-[20px] !m-0"
+                                        id="matriculaBoolean1">
+                                </div>
+                                <button class="button" name="" id="">Agregar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Clientes -->
+                <div id="landing" class="tab-pane fade">
+                    <div class="header f-alexa !border-none !bg-transparent">
+                        <h4 class="!text-[#f5f5f5] text-[18px]">Clientes</h4>
+                    </div>
+                    <div class="content flex flex-col w-full">
+                        <div class="flex">
+                            <form action="/cliente" method="POST" class="w-full">
+                                <h2 class="f-space text-[18px] !mb-8">Agregar un nuevo cliente</h2>
+
+                                <div class="txt_field">
+                                    <input type="text" name="fullnameClient" required>
+                                    <span></span>
+                                    <label class="f-alexa font-light" for="name">Nombre y apellido</label>
+                                </div>
+                                <div class="txt_field">
+                                    <input type="text" name="telClient" required>
+                                    <span></span>
+                                    <label class="f-alexa font-light" for="lastname">Teléfono</label>
+                                </div>
+                                <div class="txt_field">
+                                    <input type="text" name="correoClient" required>
+                                    <span></span>
+                                    <label class="f-alexa font-light" for="email">Correo</label>
+                                </div>
+                                <div class="txt_field">
+                                    <input type="text" name="codTurisClient" required>
+                                    <span></span>
+                                    <label class="f-alexa font-light" for="code">Cód. de Sitio Turístico</label>
+                                </div>
+                                <div class="flex justify-start items-center">
+                                    <label class="f-alexa font-light text-[16px] mr-4 !mb-0"
+                                        for="lastname">Estado</label>
+                                    <input type="checkbox" name="boolClient" class="w-[20px] h-[20px] !m-0"
+                                        id="matriculaBoolean1" checked>
+                                </div>
+                                <button class="button" name="" id="">Agregar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function editCiudad(idCiudad, nameCiudad, stateCiudad) {
+        // Rellenar los campos del formulario de edición con los datos del alumno seleccionado
+        const booleanValue = stateCiudad === "true";
+        document.getElementById('ciudadId').value = idCiudad.trim();
+        document.getElementById('nameCiudad').value = nameCiudad.trim();
+        document.getElementById('estadoCiudad').checked = booleanValue;
+
+        // Ocultar el formulario de agregar y mostrar el de edición
+        document.getElementById('editForm').style.display = 'block';
+    }
+
+</script>

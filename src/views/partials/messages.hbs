@@ -1,0 +1,42 @@
+{{#if message}}
+<div
+    class="container-message-error mb-4 absolute top-[5%] z-[99] flex justify-center items-center w-full f-alexa text-white text-[18px] w-screen">
+    <div class="bg-[#E15B6A] w-[50%] py-4 px-8 rounded-lg">
+        <div class="mx-auto w-full">
+            <div class="flex w-full justify-between items-center" role="alert">
+                {{message}}
+                {{!-- <button type="button" class="btn-close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button> --}}
+            </div>
+        </div>
+    </div>
+</div>
+{{/if}}
+{{#if success}}
+<div
+    class="container-message-error mb-4 absolute top-[5%] z-[99] flex justify-center items-center w-full f-alexa text-white text-[18px] w-screen">
+    <div class="bg-[#4CAF50] w-[50%] py-4 px-8 rounded-lg">
+        <div class="mx-auto w-full">
+            <div class="flex w-full justify-between items-center" role="alert">
+                {{success}}
+                {{!-- <button type="button" class="btn-close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button> --}}
+            </div>
+        </div>
+    </div>
+</div>
+{{/if}}
+
+<script>
+    const messageError = document.querySelector('.container-message-error');
+    // const btnClose = document.querySelector('.btn-close');
+
+    setTimeout(() => {
+        messageError.classList.add('anim-hidden');
+        setTimeout(() => {
+            messageError.classList.add('hidden');
+        }, 1000);
+    }, 2500);
+</script>
